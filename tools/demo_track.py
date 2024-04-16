@@ -263,15 +263,9 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
         ret_val, frame = cap.read()
         if ret_val:
             outputs, img_info = predictor.inference(frame, timer)
-            
-            # print("Output")
-            # print(outputs[0].shape)
-            # print("Img_infor")
-            # print(img_info)
-            # print(img_info["height"])
-            # print(img_info["width"])
-            break
 
+            print("outputs") 
+            print(outputs[0].shape)
             if outputs[0] is not None:
                 online_targets = tracker.update(outputs[0], [img_info['height'], img_info['width']], exp.test_size)
                 online_tlwhs = []
@@ -296,6 +290,10 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                 timer.toc()
                 online_im = img_info['raw_img']
             if args.save_result:
+                import numpy as np
+                from PIL import Image
+                from IPython.display import display
+                display(Image.fromarray(online_im))
                 vid_writer.write(online_im)
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):

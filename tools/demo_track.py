@@ -180,7 +180,7 @@ class Predictor(object):
             print("output after postprocess")
             print(outputs)
             print(type(outputs))
-            print(outputs.shape)
+            print(outputs)
             #logger.info("Infer time: {:.4f}s".format(time.time() - t0))
         return outputs, img_info
 
@@ -198,6 +198,8 @@ def image_demo(predictor, vis_folder, current_time, args):
     for frame_id, img_path in enumerate(files, 1):
         outputs, img_info = predictor.inference(img_path, timer)
         if outputs[0] is not None:
+            print("output")
+            print(outputs.shape)
             online_targets = tracker.update(outputs[0], [img_info['height'], img_info['width']], exp.test_size)
             online_tlwhs = []
             online_ids = []

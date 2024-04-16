@@ -15,7 +15,7 @@ class STrack(BaseTrack):
     def __init__(self, tlwh, score):
 
         # wait activate
-        self._tlwh = np.asarray(tlwh, dtype=np.float)
+        self._tlwh = np.asarray(tlwh, dtype=float)
         self.kalman_filter = None
         self.mean, self.covariance = None, None
         self.is_activated = False
@@ -163,6 +163,8 @@ class BYTETracker(object):
         lost_stracks = []
         removed_stracks = []
 
+
+
         if output_results.shape[1] == 5:
             scores = output_results[:, 4]
             bboxes = output_results[:, :4]
@@ -174,6 +176,7 @@ class BYTETracker(object):
         scale = min(img_size[0] / float(img_h), img_size[1] / float(img_w))
         bboxes /= scale
 
+        
         remain_inds = scores > self.args.track_thresh
         inds_low = scores > 0.1
         inds_high = scores < self.args.track_thresh
@@ -181,7 +184,10 @@ class BYTETracker(object):
         inds_second = np.logical_and(inds_low, inds_high)
         dets_second = bboxes[inds_second]
         dets = bboxes[remain_inds]
+        print("Object det")
+        print(dets.shape)
         scores_keep = scores[remain_inds]
+        print(scores_keep.shape)
         scores_second = scores[inds_second]
 
         if len(dets) > 0:
@@ -286,6 +292,8 @@ class BYTETracker(object):
         # get scores of lost tracks
         output_stracks = [track for track in self.tracked_stracks if track.is_activated]
 
+        print("Output strack")
+        print(output_stracks.shape)
         return output_stracks
 
 

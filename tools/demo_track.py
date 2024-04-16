@@ -166,11 +166,21 @@ class Predictor(object):
         with torch.no_grad():
             timer.tic()
             outputs = self.model(img)
+
+            print("output from YOLOX")
+            print(outputs)
+            print(type(outputs))
+            print(outputs.shape)
             if self.decoder is not None:
                 outputs = self.decoder(outputs, dtype=outputs.type())
             outputs = postprocess(
                 outputs, self.num_classes, self.confthre, self.nmsthre
             )
+
+            print("output after postprocess")
+            print(outputs)
+            print(type(outputs))
+            print(outputs.shape)
             #logger.info("Infer time: {:.4f}s".format(time.time() - t0))
         return outputs, img_info
 
@@ -260,12 +270,12 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
         if ret_val:
             outputs, img_info = predictor.inference(frame, timer)
             
-            print("Output")
-            print(outputs[0].shape)
-            print("Img_infor")
-            print(img_info)
-            print(img_info["height"])
-            print(img_info["width"])
+            # print("Output")
+            # print(outputs[0].shape)
+            # print("Img_infor")
+            # print(img_info)
+            # print(img_info["height"])
+            # print(img_info["width"])
             break
 
             if outputs[0] is not None:

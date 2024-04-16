@@ -261,8 +261,9 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
             outputs, img_info = predictor.inference(frame, timer)
             
             print("Output")
-            print(outputs[0])
+            print(outputs[0].shape)
             print("Img_infor")
+            print(img_info)
             print(img_info["height"])
             print(img_info["width"])
             break

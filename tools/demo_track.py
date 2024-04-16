@@ -167,20 +167,12 @@ class Predictor(object):
             timer.tic()
             outputs = self.model(img)
 
-            print("output from YOLOX")
-            print(outputs)
-            print(type(outputs))
-            print(outputs.shape)
             if self.decoder is not None:
                 outputs = self.decoder(outputs, dtype=outputs.type())
             outputs = postprocess(
                 outputs, self.num_classes, self.confthre, self.nmsthre
             )
 
-            print("output after postprocess")
-            print(outputs)
-            print(type(outputs))
-            print(outputs)
             #logger.info("Infer time: {:.4f}s".format(time.time() - t0))
         return outputs, img_info
 

@@ -293,7 +293,7 @@ class BYTETracker(object):
         output_stracks = [track for track in self.tracked_stracks if track.is_activated]
 
         print("Output strack")
-        print(output_stracks.shape)
+        print(len(output_stracks))
         return output_stracks
 
 

@@ -184,11 +184,17 @@ class BYTETracker(object):
         inds_second = np.logical_and(inds_low, inds_high)
         dets_second = bboxes[inds_second]
         dets = bboxes[remain_inds]
-        print("Object det")
-        print(dets.shape)
+   
         scores_keep = scores[remain_inds]
-        print(scores_keep.shape)
+     
         scores_second = scores[inds_second]
+        print("Object det high score")
+        print(dets.shape)
+        print(scores_keep.shape)
+        print("Object det low score")
+        print(dets_second.shape)
+        print(scores_keep.shape)
+
 
         if len(dets) > 0:
             '''Detections'''
@@ -279,6 +285,8 @@ class BYTETracker(object):
                 track.mark_removed()
                 removed_stracks.append(track)
 
+        print("Remove")
+        print(len(lost_stracks))
         # print('Ramained match {} s'.format(t4-t3))
 
         self.tracked_stracks = [t for t in self.tracked_stracks if t.state == TrackState.Tracked]

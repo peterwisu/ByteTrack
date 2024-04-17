@@ -181,6 +181,8 @@ class BYTETracker(object):
         inds_low = scores > 0.1
         inds_high = scores < self.args.track_thresh
 
+        print("below 0.1")
+        print(bboxes[scores < 0.1].shape)
         inds_second = np.logical_and(inds_low, inds_high)
         dets_second = bboxes[inds_second]
         dets = bboxes[remain_inds]
@@ -220,7 +222,9 @@ class BYTETracker(object):
         if not self.args.mot20:
             dists = matching.fuse_score(dists, detections)
         matches, u_track, u_detection = matching.linear_assignment(dists, thresh=self.args.match_thresh)
-
+        
+        print("Match in First")
+        print(len(matches))
         for itracked, idet in matches:
             track = strack_pool[itracked]
             det = detections[idet]
@@ -242,6 +246,9 @@ class BYTETracker(object):
         r_tracked_stracks = [strack_pool[i] for i in u_track if strack_pool[i].state == TrackState.Tracked]
         dists = matching.iou_distance(r_tracked_stracks, detections_second)
         matches, u_track, u_detection_second = matching.linear_assignment(dists, thresh=0.5)
+
+        print("Match in Second")
+        print(len(matches))
         for itracked, idet in matches:
             track = r_tracked_stracks[itracked]
             det = detections_second[idet]
@@ -252,6 +259,7 @@ class BYTETracker(object):
                 track.re_activate(det, self.frame_id, new_id=False)
                 refind_stracks.append(track)
 
+       
         for it in u_track:
             track = r_tracked_stracks[it]
             if not track.state == TrackState.Lost:
@@ -272,6 +280,8 @@ class BYTETracker(object):
             track.mark_removed()
             removed_stracks.append(track)
 
+        print("new track")
+        print(u_detection)
         """ Step 4: Init new stracks"""
         for inew in u_detection:
             track = detections[inew]

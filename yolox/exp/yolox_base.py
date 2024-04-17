@@ -55,7 +55,9 @@ class Exp(BaseExp):
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
         # -----------------  testing config ------------------ #
-        self.test_size = (640, 640)
+        self.test_size = (1280,720)# (640, 640)
+        print("Test _ Size ")
+        print(self.test_size)
         self.test_conf = 0.001
         self.nmsthre = 0.65
 

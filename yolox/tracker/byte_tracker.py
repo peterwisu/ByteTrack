@@ -195,7 +195,7 @@ class BYTETracker(object):
         print(scores_keep.shape)
         print("Object det low score")
         print(dets_second.shape)
-        print(scores_keep.shape)
+        print(scores_second.shape)
 
 
         if len(dets) > 0:
